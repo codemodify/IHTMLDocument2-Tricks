@@ -1,0 +1,79 @@
+﻿
+        //int hWnd;
+        //public delegate int Callback(int hWnd,int lParam);
+
+        //[DllImport( "User32.dll" )]
+        //public static extern Int32 FindWindow( String lpClassName, String lpWindowName );
+
+        //[DllImport( "User32.dll" )]
+        //public static extern Int32 SetForegroundWindow( int hWnd );
+
+        //[DllImport( "User32.dll" )]
+        //public static extern Boolean EnumChildWindows( int hWndParent, Delegate lpEnumFunc, int lParam );
+
+        //[DllImport( "User32.dll" )]
+        //public static extern Int32 GetWindowText( int hWnd, StringBuilder s, int nMaxCount );
+
+        //[DllImport( "User32.dll" )]
+        //public static extern Int32 GetWindowTextLength( int hwnd );
+
+        //[DllImport( "User32.dll", EntryPoint = "GetDesktopWindow" )]
+        //public static extern int GetDesktopWindow();
+
+
+
+
+            //HtmlElement headTag = htmlDocument.Body.Parent.FirstChild;
+
+
+                                    // "script" );
+                                                //scriptTag.SetAttribute( "language", "\"javascript\"" );
+                        //scriptTag.SetAttribute( "type", "\"text/javascript\"" );
+                        //scriptTag. =
+
+            //HtmlElement scriptTag = htmlDocument.CreateElement(
+            //                "<script language=\"javascript\" type=\"text/javascript\">" +
+            //                "function callFromCA()" +
+            //                "{" +
+            //                "   var callButton = document.getElementById('buttonInput');" +
+            //                "   if( callButton != null ){ callButton.click(); }"+
+            //                "}"+
+            //                "</script>");
+            //HtmlElement scriptTagContent = htmlDocument.CreateElement
+            //(
+            //                "function callFromCA()" +
+            //                "{" +
+            //                "   var callButton = document.getElementById('buttonInput');" +
+            //                "   if( callButton != null ){ callButton.click(); }"+
+            //                "}"                
+            //);
+
+            //scriptTag.AppendChild( scriptTagContent );
+
+            //headTag.AppendChild( scriptTag );
+
+            //htmlDocument.InvokeScript( "callFromCA" );
+
+            //Callback myCallBack = new Callback(EnumChildGetValue);
+            //hWnd = FindWindow( "Internet Explorer_Server" ,"Widows Internet Explorer");
+            //if(hWnd == 0)
+            //{
+            //    MessageBox.Show("Please Start Calling Window Application");
+            //}
+            //else
+            //{
+            //    EnumChildWindows(hWnd,myCallBack,0);
+            //}
+            
+            
+        //public int EnumChildGetValue( int hWnd, int lParam )
+        //{
+        //    StringBuilder formDetails = new StringBuilder( 256 );
+        //    int txtValue;
+        //    string editText="";
+        //    txtValue = GetWindowText( hWnd, formDetails, 256 );
+        //    editText = formDetails.ToString().Trim();
+        //    MessageBox.Show( "Contains text of contro:" + editText );
+        //    return 1;
+        //}
+            

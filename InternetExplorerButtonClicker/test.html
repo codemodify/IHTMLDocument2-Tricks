@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr-FR">
+<head>
+  <title>Contact Agent</title>
+  <meta name="AUTHOR" content="Eric Silvestre">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <link rel="stylesheet" type="text/css"
+	media="screen" title="User
+Defined Style" href="/lgfrance/ihm/layout_type2/css/poste_commun_css.php4?projet=lgfrance/ihm&layout=layout_type2" />
+  
+  <!-- [if lt IE 7] -->
+  <link rel="stylesheet" type="text/css"
+	media="screen" title="User
+Defined Style" href="/lgfrance/ihm/layout_type2/css/poste_commun_css_IE6.php4?projet=lgfrance/ihm&layout=layout_type2" />
+ <!-- [endif] -->
+  
+  <link rel="stylesheet" type="text/css"
+	media="screen" title="User
+Defined Style" href="/lgfrance/ihm/layout_type2/css/poste_ag_css.php4?projet=lgfrance/ihm&layout=layout_type2" >
+
+	<script type="text/javascript">var nom_projet="lgfrance/ihm";var layout="layout_type2";</script>
+	<!-- Pour avoir les layout type1 et type2 -->
+	<!--<script language="javascript" type="text/javascript" src="/lgfrance/ihm/locales/FR.js"></script>-->	
+	<script language="javascript" type="text/javascript" src="/lgfrance/ihm/locales/type2FR.js"></script>
+		
+	<script language="javascript" type="text/javascript" src="/share/fct_interface.js"></script>
+	<script language="javascript" type="text/javascript" src="/lgfrance/ihm/layout_type2/js/poste.js"></script>
+	<script language="javascript" type="text/javascript" src="/lgfrance/ihm/engine/fct_agent.js"></script>
+	<script language="javascript" type="text/javascript" src="/lgfrance/ihm/engine/fct_control.js"></script>
+	<script language="javascript" type="text/javascript" src="/lgfrance/ihm/engine/fct_context.js"></script>
+	<script language="javascript" type="text/javascript">
+var fichier_liste_transferts = "ihm/liste_contacts_type2.txt";
+var liste_transferts = "";
+	</script>
+</head>
+<body link=white alink=white vlink=white>
+
+<!-- BANDEAU HAUT (juste les images de fond) -->
+	<div id="banniere"></div>
+	<div id="topbleft" style="display:none;"></div>
+	<div id="tophright" style="display:none;"></div>
+	<div id="topbright" style="display:none;"><img id="topbright_img" src="/lgfrance/ihm/layout_type2/images/espaceur.gif" /></div>
+	<div id="logo" style="display:none;"></div>
+<!-- FIN BANDEAU HAUT -->
+
+<!-- ETAT DU POSTE CLIENT -->
+	<div id="etat">
+		<div id="display_state"></div>
+		<div id="display_information"></div>	
+		<div id="display_erreurs"></div>
+		<script language="javascript" type="text/javascript" src="/lgfrance/ihm/engine/fct_banniere.js"></script>
+	</div>
+<!-- FIN ETAT DU POSTE CLIENT -->
+
+<!-- DEBUG -->
+	<div id="divdebug"><span id="debug"></span></div>
+<!-- FIN DEBUG -->
+
+<!-- DEBUG -->
+	<div id="tstqualif"></div>
+<!-- FIN DEBUG -->
+
+<!-- LISTES DE SERVICES - AGENTS - SAISIE TEL -->
+	<div id="detailonaction">
+		<ul id="detailservices">
+		</ul>
+		<div id="fermedetailbtn">
+			<input id="fermedetailonaction" type="button" onclick="javascript:cacheDetailOnAction()" value="X"/>
+		</div>
+	</div>
+<!-- FIN LISTES DE SERVICES - AGENTS - SAISIE TEL -->
+
+<!-- SAISIE TEL -->
+	<div id="appellibre">
+		<form name="f" onsubmit="return validation_entree(saisielibre.value)">
+			<div id="saisieappellibre">
+				<!--<input type="text" maxlength="10" size="10" onfocus="javascript:change_etat_appelsortant()" onkeypress="javascript:return testSaisie(this)" id="saisielibre"/>-->
+				<input type="text" maxlength="10" size="10" onfocus="javascript:change_etat_appelsortant()" id="saisielibre"/>
+				<input id="bouton_appellibre" type="button" onclick="javascript:if(testNumero(saisielibre.value)){do_appelsortant(saisielibre.value);}else{afficheAlert();}" value=""/>
+			</div>
+		</form>
+	</div>
+<!-- FIN SAISIE TEL -->	
+
+<!--- MODIF ANPE --->
+	<!-- STAT AGENT (tableau avec temps login, pauses, popu....) -->
+	<div id="statuser">
+			<!--table><thead id="user_head_node"></thead><tbody id="user_node"></tbody></table-->
+			
+		<div class="divcols" id="login"></div>
+		<div class="divcols" id="popups"></div>
+		<div class="divcols" id="n2"></div>
+		<div class="divcols" id="pause"></div>
+		<div class="divcols" id="etatactuel"></div>
+		<div class="divcols" id="n1"></div>
+		<div class="divcols" id="presence"></div>
+		<div class="divcols" id="traitm"></div>
+		<div class="divcols" id="postappel"></div>
+		<div class="divcols" id="tempo"></div>
+		<div class="divcols" id="libre"></div>
+		<div class="divcols" id="popup"></div>
+		<div class="divcols" id="sonnerie"></div>
+		<div class="divcols" id="enligne"></div>
+		<div class="divcols" id="enligne2"></div>
+		<div class="divcols" id="ratio1"></div>
+		<div class="divcols" id="ratio2"></div>
+		<span id="display_stats"></span>
+	</div>
+<!-- FIN STAT AGENT (tableau avec temps login, pauses, popu....) -->
+	<div id="toutstats">
+	
+		<div id="cadre_statuser">
+			<!--<div id="corner3"></div>-->
+			<!--<div id="corner4"></div>-->
+			<span id="statuser_texte">Appels de la journée</span>
+	
+			<div id="statuser_coingh"></div>
+			<div id="statuser_coingb"></div>			
+		</div>
+
+<!-- STATS SERVICES -->
+		<div id="image_appels"></div>
+		<div id="stat">
+			<!--<div id="corner1"></div>-->
+			<!--<div id="corner2"></div>-->
+			<span id="stat_texte">Conseillers</span>
+			<span id="stat_texte2">Appels</span>		
+			<div id="stat_coingh"></div>
+			<div id="stat_coindh"></div>
+			<table id="stats_node" cellspacing="1">
+				<thead id="node_header"><tr id="firstline"></tr></thead>
+				<tbody id="node_body"></tbody>
+				<!--tfoot id="base_node"><tr><td colspan="56"><img src="/images/rien.gif"></img></td></tr></tfoot-->
+			</table>
+				<script type="text/javascript" src="/lgfrance/ihm/engine/fct_stat.js"></script>
+				<script type="text/javascript">
+					fct_stat_add_statistic_line(0, statistic_line_header) ;
+					fct_stat_add_statistic_line_users_values(0, statistic_line_users_value1_header, statistic_line_users_value2_header, statistic_line_users_value3_header, statistic_line_users_value4_header) ;
+					fct_stat_add_statistic_line_calls_values(0, statistic_line_calls_value1_header, statistic_line_calls_value2_header) ;
+	
+					add_user_header(array_user_header , new Array("login", "popups", "n1", "n2", "pause", "etatactuel", "presence", "traitm", "postappel", "tempo", "libre", "popup", "sonnerie", "enligne", "enligne2", "ratio1", "ratio2") ) ;
+					add_user_line(1,"-", "-", "-", "-", "-", "-", "-", "-","-", "-", "-", "-","-", "-", "-","-", "-") ;
+	
+					navigate('action:get_statistics') ;
+					navigate('action:get_login_date') ;
+				</script>
+			<div id="stat_coingb"></div>
+			<div id="stat_coindb"></div>
+		</div>
+<!-- FIN DE STATS SERVICES -->
+	
+	</div>
+
+
+<!-- CONTEXTE CLIENT -->
+	<div id="context">
+
+<!-- PBI -->
+		<div id="onglet0">
+			<span id="context_texte">Appel en cours</span>
+		</div>
+<!-- PBI -->
+
+		<div id="contextAE">
+
+			<div id="infos">
+				<!--ul><li class="entete_apen"><span class="entete_apen">Informations :</span></li></ul-->
+				<ul><li>
+					<table cellspacing="0">
+						<!--<tr>
+							<td id="th_waiting_times"></td>
+							<td class="data"><span id="waiting_times"></span></td>						
+							<td id="th_telclient"></td>
+							<td class="data"><span id="telclient"></span></td>
+							<td id="th_nomclient"></td>
+							<td class="data"><span id="nomclient"></span></td>	
+							<td id="th_service"></td>
+							<td class="data"><span id="service"></span></td>											
+						</tr>	-->							
+						<tr>
+							<!--<td id="th_origine"></td>-->
+							<td id="th_service"></td>			
+							<td id="th_waiting_times"></td>				
+							<td id="th_telclient"></td>
+							<td id="th_nomclient"></td>
+							<td id="th_adresseclient"></td>						
+						</tr>
+						<tr>
+							<!--<td class="data"><span id="origine"></span></td>-->
+							<td class="data"><span id="service"></span></td>	
+							<td class="data"><span id="waiting_times"></span></td>						
+							<td class="data"><span id="telclient"></span></td>
+							<td class="data"><span id="nomclient"></span></td>		
+							<td class="data"><span id="adresseclient"></span></td>		
+						</tr>						
+						<tr id="trtype">
+							<td id="th_type"></td>
+							<td class="data"><span id="type"></span></td>
+						</tr>
+						<tr id="trtelclient">
+							<!--<td id="th_telclient"></td>
+							<td class="data"><span id="telclient"></span></td>-->
+						</tr>
+						<tr id="trnomclient">
+							<!--<td id="th_nomclient"></td>
+							<td class="data"><span id="nomclient"></span></td>-->
+						</tr>
+						<tr id="tradresseclient">
+							<!--<td id="th_adresseclient"></td>
+							<td class="data"><span id="adresseclient"></span></td>-->
+						</tr>
+						<tr id="trserviceappele">
+							<td id="th_serviceappele"></td>
+							<td class="data"><span id="serviceappele"></span></td>
+						</tr>
+						<tr id="trnumerocompose">
+							<td id="th_numerocompose"></td>
+							<td class="data"><span id="numerocompose"></span></td>
+						</tr>
+					</table>
+				</li></ul>
+			</div>
+			<script type="text/javascript">
+				//th_service.innerText = libctx_service+" - "+libctx_priority+" :";
+				/*MODIF LGFRANCE CLY*/
+				/*th_service.innerText = libctx_service;*/
+				th_service.innerText = libctx_numbername;
+				/*th_service.innerText = libctx_site+" :";*/
+				
+				th_type.innerText = libctx_calltype;
+				th_waiting_times.innerText = libctx_waiting_times;
+				/*MODIF LGFRANCE CLY*/
+				th_telclient.innerText = libctx_clientphonenumber;
+				/*th_telclient.innerText = libctx_identifiant+" :";*/
+				
+				th_nomclient.innerText = libctx_username;
+				th_adresseclient.innerText = libctx_useraddress;
+				th_serviceappele.innerText = libctx_numbername;
+				th_numerocompose.innerText = libctx_callednumber;
+				//lib_entete_desc_serv.innerText = libctx_servicedescription+" :";
+				//lib_entete_desc_num.innerText = libctx_numberdescription+" :";
+				
+				//th_origine.innerText = libctx_origine;
+			</script>
+		</div>
+	</div>
+<!-- FIN CONTEXTE CLIENT -->
+
+<!-- BOUTONS DE CONTROLE HORS LIGNE -->
+	<div id="offbtns" class="btns">
+		<ul id="navoff">
+			<li id="btn_recept"><a HIDEFOCUS="true" href="javascript:etat_reception()" id="a_reception"><script type="text/javascript">
+			a_reception.innerText = libbtn_idle;</script></a>
+			</li>
+			<li id="menutravaux"><a HIDEFOCUS="true" href="#" id="a_travaux">
+			<script type="text/javascript">a_travaux.innerText = libbtn_menuwork;</script></a>
+				<ul id="menuannexe">
+				</ul>
+			</li>
+			<!--<li id="menupose"><p><a HIDEFOCUS="true" href="javascript:afficheInfoClient()" id="a_pause">-->
+			<!--<li id="menupose"><p><a HIDEFOCUS="true" href="javascript:tst_appel_sortant('0478175466')" id="a_pause">-->
+			<!--<li id="menupose"><p><a HIDEFOCUS="true" href="javascript:tst_libelle()" id="a_pause">-->
+			<li id="menupose"><a HIDEFOCUS="true" href="#" id="a_pause">
+			<script type="text/javascript">a_pause.innerText = libbtn_menubreak;</script></a>
+				<ul id="menupause">
+				</ul>
+			</li>
+
+			<!--AJOUT LGFRANCE Bouton Ecrire un message -->
+			<li id="menusaisiemessage"><a HIDEFOCUS="true" href="javascript:get_transfer_services('saisie');" id="a_saisiemessage">
+			<script type="text/javascript">a_saisiemessage.innerText = libbtn_menusaisiemessage;</script></a>
+			</li>
+
+			<!--AJOUT LGFRANCE Bouton Lire les messages -->
+			<li id="menuliremessage"><a HIDEFOCUS="true" href="javascript:get_transfer_services('lecture');" id="a_liremessage">
+			<script type="text/javascript">a_liremessage.innerText = libbtn_menuliremessage;</script></a>
+			</li>
+
+			<!--AJOUT LGFRANCE Bouton Appel réseau -->
+			<li id="menuappelsortant1"><a HIDEFOCUS="true" href="javascript:get_transfer_services('appel1');" id="a_appelsortant1">
+			<script type="text/javascript">a_appelsortant1.innerText = libbtn_menuappelsortant1;</script></a>
+				<ul id="sousmenusortant1">
+				</ul>
+			</li>
+
+			<!--AJOUT LGFRANCE Bouton Autres appels -->
+			<li id="menuappelsortant2"><a HIDEFOCUS="true" href="javascript:get_transfer_services('appel2');" id="a_appelsortant2">
+			<script type="text/javascript">a_appelsortant2.innerText = libbtn_menuappelsortant2;</script></a>
+				<ul id="sousmenusortant2">
+				</ul>
+			</li>
+
+			<li id="menuec"><a HIDEFOCUS="true" href="#" id="a_modecoute">
+			<script type="text/javascript"> a_modecoute.innerText = libbtn_spymode;</script>
+			</a><ul id="menuecoute"></ul>
+         		</li>
+		</ul>
+		<script type="text/javascript">
+			if(!affiche_menu_pause)
+			{
+				menupose.style.visibility='hidden';
+				menupose.style.position='absolute';
+			}
+			if(!affiche_menu_travaux)
+			{
+				menutravaux.style.visibility='hidden';
+				menutravaux.style.position='absolute';
+			}
+			<!--AJOUT LGFRANCE-->
+			if(!affiche_menu_appelsortant)
+			{
+				menuappelsortant.style.visibility='hidden';
+				menuappelsortant.style.position='absolute';
+			}
+			<!--FIN AJOUT LGFRANCE-->
+			
+			fct_context_call_crm_values();
+		</script>
+	</div>
+<!-- FIN BOUTONS DE CONTROLE HORS LIGNE -->
+
+<!-- BOUTONS QUITTER -->
+	<div id="btnfermer" class="btns">
+		<ul>
+			<li id="btn_quit"><a HIDEFOCUS="true" href='javascript:quit()' id="a_quit">
+			<script type="text/javascript">a_quit.innerText = libbtn_quit;</script></a>
+         </li>
+		</ul>
+	</div>
+<!-- FIN BOUTONS QUITTER -->
+
+<!-- BOUTON APPEL SORTANT -->
+	<div id="appsortant">
+		<form action="javascript:maketelappsortant(f.saisietelvalue)" name="f">
+			<div id="btnappsortant" class="btns">
+				<ul>
+					<li><a HIDEFOCUS="true" href='javascript:maketelappsortant(f.saisietelvalue)' id="a_appsortant">
+				<script type="text/javascript">a_appsortant.innerText = libbtn_appsortant;</script></a>
+					</li>
+				</ul>
+			</div>
+		<!-- FIN BOUTON APPEL SORTANT-->
+		<!-- APPEL SORTANT - SAISIE TEL -->
+			<div id="saisietelappsortant">
+				<input name="saisietelvalue"/>
+				<!--input type="button" onclick="javascript:executeAppSortant(saisietelvalue.value)" value="OK"/-->
+			</div>
+		</form>
+	</div>
+<!-- FIN APPEL SORTANT - SAISIE TEL -->
+
+<!-- BOUTONS DE CONTROLE EN LIGNE -->
+	<div id="onbtns" class="btns" >
+		<ul id="navon">
+			<li id="li_raccorcher"><a HIDEFOCUS="true" href="javascript:do_post_contact();" id="a_raccrocher">
+			<script type="text/javascript">a_raccrocher.innerText = libbtn_hangup;</script></a></li>
+		</ul>
+		<!--AJOUT LGFRANCE Bouton transfert reseau -->
+		<ul id="navon3">
+			<li id="menutransfertreseau"><a HIDEFOCUS="true" href="javascript:get_help1();" id="a_transfertreseau">
+			<script type="text/javascript">a_transfertreseau.innerText = libbtn_tranfertreseau;</script></a>
+			</li>	
+		</ul>		
+		<!--FIN AJOUT LGFRANCE -->
+		<ul id="navon2">
+			<li id="menut"><a HIDEFOCUS="true" href="#" id="a_transfert">
+			<script type="text/javascript">a_transfert.innerText = libbtn_menutransfer;</script></a><ul id="menutransfert"></ul>
+                        </li>
+		</ul>			
+		<!--AJOUT LGFRANCE Bouton Ecrire un message -->
+		<ul id="navon5">
+			<li id="menusaisiemessage2"><a HIDEFOCUS="true" href="javascript:get_transfer_services('saisie');" id="a_saisiemessage2">
+			<script type="text/javascript">a_saisiemessage2.innerText = libbtn_menusaisiemessage;</script></a>
+			</li>	
+		</ul>		
+		<!--FIN AJOUT LGFRANCE -->
+		
+		<script type="text/javascript">
+			<!--AJOUT LGFRANCE-->
+			if(!affiche_menu_transfert)
+			{
+				navon2.style.visibility='hidden';
+			}
+			<!--FIN AJOUT LGFRANCE-->		
+			start_displaying("li");
+			cacheInfosClient();
+			navigate('action:refresh_state') ;
+			navigate('action:get_configuration');
+			navigate('action:get_services');
+			fct_agent_startNbMessageDeamon();
+
+			<!--AJOUT LGFRANCE RECUP INFO XML-->
+			fct_agent_recupXml();
+			<!--AJOUT LGFRANCE-->
+
+		</script>
+	</div>
+<!-- FIN BOUTONS DE CONTROLE EN LIGNE -->
+
+
+<!-- CADRE IFRAME DE L'APPLICATION WEB CLIENT -->
+	<div id="principal">
+		<script type="text/javascript">
+			if(!affiche_principale)
+			{
+				principal.style.display="none";
+				principal.style.visibility = "hidden";
+			}
+			btnappsortant.style.visibility = programme_externe;
+		</script>
+		<div id="menu_principal">
+			<!--<div id="onglet1">
+						<a HIDEFOCUS="true" href="javascript:openLien(1);" id="lien1">
+							<script type="text/javascript">lien1.innerText = libbtn_lien1;</script>
+						</a>
+			</div>
+			<div id="onglet2">
+						<a HIDEFOCUS="true" href="javascript:openLien('type2');" id="lien2">
+							<script type="text/javascript">lien2.innerText = libbtn_lien2;</script>
+						</a>
+			</div>-->
+			<div id="appbtns" class="btns">
+					<a HIDEFOCUS="true" href="javascript:openFullScreen_lien();" id="fsbtn">
+						<script type="text/javascript">fsbtn.innerText = libbtn_fullscreen;</script>
+					</a>
+			</div>
+		</div>
+		<div id="principal2">
+			<div id="haut">
+				<div id="coingh"></div>
+				<div id="coindh"></div>
+			</div>
+			<div id="contenu">
+				<!--<iframe name="applicative"  FRAMEBORDER="0" src="accueil.html" MARGINHEIGHT='0' MARGINWIDTH='0' VSPACE='0' HSPACE='0' align="center" width="100%" height="100%" scrolling="auto"></iframe>-->
+				<iframe name="applicative"  FRAMEBORDER="0" src="accueil.html" MARGINHEIGHT='0' MARGINWIDTH='0' VSPACE='0' HSPACE='0' align="center" width="0%" height="0%" scrolling="auto"></iframe>				
+			</div>
+			<div id="bas">
+				<div id="coingb"></div>
+				<div id="coindb"></div>
+			</div>
+		</div>
+	</div>
+<!-- FIN CADRE IFRAME DE L'APPLICATION WEB CLIENT -->
+
+				<!--iframe name="applicative"  scrolling="auto" FRAMEBORDER="0" WIDTH="100%" HEIGHT="100%" src="http://www.anpe.fr/" MARGINHEIGHT='0' MARGINWIDTH='0' VSPACE='0' HSPACE='0' align="center" width="100%" height="40%" scrolling="auto"></iframe-->
+
+	<div id="qualif">
+				<!--<iframe id="idframe_qualif" name="frame_qualif" FRAMEBORDER="0" src="" MARGINHEIGHT='0' MARGINWIDTH='0' VSPACE='0' HSPACE='-50' align="center" width="100%" height="100%"></iframe>-->
+				<iframe id="idframe_qualif" name="frame_qualif" FRAMEBORDER="0" src="" MARGINHEIGHT='0' MARGINWIDTH='0' VSPACE='0' HSPACE='0' align="center" width="0%" height="0%"></iframe>
+	</div>
+
+<!-- CADRE IFRAME DU NOTEPAD -->
+	<div id="pad" style="display:none;">
+		<iframe name="notepad" src="notepad.htm" align="center" width="0" height="0" scrolling="auto"></iframe>
+	</div>
+<!-- CADRE IFRAME DU NOTEPAD -->
+</body>
+</html>
